@@ -455,6 +455,42 @@ export default function Settings({ onSettingsSaved }: SettingsProps) {
           className="space-y-6"
           id="database-panel"
         >
+          {/* PostgreSQL Status Header Card */}
+          <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-2xl border border-slate-700/50 p-6 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gold-400/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full flex items-center gap-1.5 w-max">
+                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span>
+                  Đang hoạt động (Connected)
+                </span>
+              </div>
+              <h3 className="text-base font-bold font-display italic tracking-wide text-gold-200">Hệ quản trị cơ sở dữ liệu PostgreSQL</h3>
+              <p className="text-slate-400 text-xs leading-relaxed max-w-xl">
+                Hệ thống đang sử dụng cơ sở dữ liệu quan hệ **PostgreSQL** chạy trên Docker Compose thông qua tầng kết nối tối ưu **Prisma ORM**. Dữ liệu được đồng bộ hóa tức thời và độc lập.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4 text-xs shrink-0 bg-slate-950/40 p-4 rounded-xl border border-slate-700/30 w-full md:w-auto">
+              <div>
+                <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Cơ sở dữ liệu (Engine)</span>
+                <span className="font-semibold text-slate-300">PostgreSQL 15</span>
+              </div>
+              <div>
+                <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Công cụ ORM</span>
+                <span className="font-semibold text-slate-300">Prisma Client</span>
+              </div>
+              <div>
+                <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Tên Database</span>
+                <span className="font-semibold text-gold-300 font-mono">studio_db</span>
+              </div>
+              <div>
+                <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-wider">Cổng kết nối</span>
+                <span className="font-semibold text-slate-300 font-mono">5433 (External)</span>
+              </div>
+            </div>
+          </div>
+
           {/* Quick Import/Export Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Export database block */}
@@ -470,7 +506,7 @@ export default function Settings({ onSettingsSaved }: SettingsProps) {
                   </div>
                 </div>
                 <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                  Tải toàn bộ cấu trúc dữ liệu studio bao gồm: danh sách khách hàng, hợp đồng, lịch chụp và tiến độ công việc về máy cá nhân dưới dạng tệp tin JSON an toàn.
+                  Trích xuất và tải toàn bộ cấu trúc dữ liệu studio từ cơ sở dữ liệu PostgreSQL bao gồm: danh sách khách hàng, hợp đồng, lịch chụp và tiến độ công việc về máy cá nhân dưới dạng tệp tin JSON an toàn.
                 </p>
               </div>
               <div className="mt-5 pt-4 border-t border-slate-50">
@@ -498,7 +534,7 @@ export default function Settings({ onSettingsSaved }: SettingsProps) {
                   </div>
                 </div>
                 <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                  Đè dữ liệu hiện tại bằng tệp tin sao lưu trước đó. <span className="text-rose-500 font-semibold">Cảnh báo:</span> Hành động này sẽ thay thế hoàn toàn cấu hình và lịch trình hiện tại của studio.
+                  Đè dữ liệu hiện tại bằng tệp tin sao lưu trước đó. <span className="text-rose-500 font-semibold">Cảnh báo:</span> Dữ liệu mới sẽ được ghi đè trực tiếp lên cơ sở dữ liệu PostgreSQL, thay thế hoàn toàn cấu hình hiện tại của studio.
                 </p>
                 {importError && (
                   <p className="text-[11px] text-rose-500 font-medium mt-2 bg-rose-50 border border-rose-100 px-2 py-1 rounded">

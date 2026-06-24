@@ -1714,13 +1714,9 @@ async function startServer() {
       const backupId = 'bak-' + LocalDatabase.uuid();
       const filename = `backup_${Date.now()}_${backupId}.json`;
       const backupPath = path.join(backupsDir, filename);
-      const dbFile = path.join(process.cwd(), 'db.json');
 
-      if (!fs.existsSync(dbFile)) {
-        return res.status(500).json({ error: 'Không tìm thấy file cơ sở dữ liệu gốc để sao lưu' });
-      }
-
-      fs.copyFileSync(dbFile, backupPath);
+      // Write the current live PostgreSQL state directly to the JSON backup file
+      fs.writeFileSync(backupPath, JSON.stringify(db, null, 2), 'utf-8');
       const stats = fs.statSync(backupPath);
 
       const newBackup = {
