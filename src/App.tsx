@@ -191,37 +191,39 @@ export default function App() {
           <div className="p-6 space-y-5">
             
             {/* Quick login helper dropdown (for reviewers) */}
-            <div className="bg-gold-50/40 border border-gold-200/30 p-4 rounded-xl">
-              <p className="text-[10px] font-bold text-gold-800 uppercase tracking-wider mb-2.5 flex items-center">
-                <Clock className="w-3.5 h-3.5 mr-1 text-gold-600" /> Trình diễn thử nghiệm (Quick Login):
-              </p>
-              <div className="grid grid-cols-2 gap-2 text-[10px]">
-                <button 
-                  onClick={() => handleQuickLogin('admin@studio.com', 'admin123')}
-                  className="bg-white hover:bg-gold-100/30 border border-gold-200/40 rounded-lg p-2 font-medium text-gold-900 transition-colors shadow-2xs"
-                >
-                  Admin (Nguyễn Văn Admin)
-                </button>
-                <button 
-                  onClick={() => handleQuickLogin('manager@studio.com', 'manager123')}
-                  className="bg-white hover:bg-gold-100/30 border border-gold-200/40 rounded-lg p-2 font-medium text-gold-900 transition-colors shadow-2xs"
-                >
-                  Manager (Trần Thị Manager)
-                </button>
-                <button 
-                  onClick={() => handleQuickLogin('photo@studio.com', 'staff123')}
-                  className="bg-white hover:bg-gold-100/30 border border-gold-200/40 rounded-lg p-2 font-medium text-gold-900 transition-colors shadow-2xs"
-                >
-                  Staff (Thợ chụp Hải Nam)
-                </button>
-                <button 
-                  onClick={() => handleQuickLogin('editor@studio.com', 'staff123')}
-                  className="bg-white hover:bg-gold-100/30 border border-gold-200/40 rounded-lg p-2 font-medium text-gold-900 transition-colors shadow-2xs"
-                >
-                  Staff (Thợ ảnh Minh Hoàng)
-                </button>
+            {!import.meta.env.PROD && (
+              <div className="bg-gold-50/40 border border-gold-200/30 p-4 rounded-xl">
+                <p className="text-[10px] font-bold text-gold-800 uppercase tracking-wider mb-2.5 flex items-center">
+                  <Clock className="w-3.5 h-3.5 mr-1 text-gold-600" /> Trình diễn thử nghiệm (Quick Login):
+                </p>
+                <div className="grid grid-cols-2 gap-2 text-[10px]">
+                  <button 
+                    onClick={() => handleQuickLogin('admin@studio.com', 'admin123')}
+                    className="bg-white hover:bg-gold-100/30 border border-gold-200/40 rounded-lg p-2 font-medium text-gold-900 transition-colors shadow-2xs"
+                  >
+                    Admin (Nguyễn Văn Admin)
+                  </button>
+                  <button 
+                    onClick={() => handleQuickLogin('manager@studio.com', 'manager123')}
+                    className="bg-white hover:bg-gold-100/30 border border-gold-200/40 rounded-lg p-2 font-medium text-gold-900 transition-colors shadow-2xs"
+                  >
+                    Manager (Trần Thị Manager)
+                  </button>
+                  <button 
+                    onClick={() => handleQuickLogin('photo@studio.com', 'staff123')}
+                    className="bg-white hover:bg-gold-100/30 border border-gold-200/40 rounded-lg p-2 font-medium text-gold-900 transition-colors shadow-2xs"
+                  >
+                    Staff (Thợ chụp Hải Nam)
+                  </button>
+                  <button 
+                    onClick={() => handleQuickLogin('editor@studio.com', 'staff123')}
+                    className="bg-white hover:bg-gold-100/30 border border-gold-200/40 rounded-lg p-2 font-medium text-gold-900 transition-colors shadow-2xs"
+                  >
+                    Staff (Thợ ảnh Minh Hoàng)
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Normal login Form */}
             <form onSubmit={handleLogin} className="space-y-4">
