@@ -52,7 +52,7 @@ export default function Settings({ onSettingsSaved }: SettingsProps) {
   
   // Settings Form State
   const [settings, setSettings] = useState<StudioSettings>({
-    name: 'Aura Bridal Studio',
+    name: 'The Will Studio',
     phone: '',
     email: '',
     address: '',
@@ -152,7 +152,7 @@ export default function Settings({ onSettingsSaved }: SettingsProps) {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `aura_bridal_database_${new Date().toISOString().split('T')[0]}.json`;
+      a.download = `the_will_studio_database_${new Date().toISOString().split('T')[0]}.json`;
       document.body.appendChild(a);
       a.click();
       a.remove();

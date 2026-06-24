@@ -689,13 +689,13 @@ export class LocalDatabase {
 
     // Fallback: If not initialized yet, try reading from json file (or it will be loaded from Postgres via initialize)
     const defaultStudioSettings: StudioSettings = {
-      name: "Aura Bridal Studio",
+      name: "The Will Studio",
       phone: "0901 234 567",
-      email: "contact@aurabridal.com",
+      email: "contact@thewillstudio.com",
       address: "123 Đường Ba Tháng Hai, Quận 10, TP. Hồ Chí Minh",
-      website: "https://aurabridal.vn",
+      website: "https://thewillstudio.vn",
       opening_hours: "08:30 - 21:30",
-      notes: "Studio váy cưới cao cấp & dịch vụ chụp ảnh trọn gói chuyên nghiệp.",
+      notes: "Studio ảnh cưới cao cấp & dịch vụ chụp ảnh trọn gói chuyên nghiệp.",
       backup_schedule: "weekly",
       last_backup_time: ""
     };
@@ -768,13 +768,13 @@ export class LocalDatabase {
       if (users.length === 0 || roles.length === 0) {
         console.log('PostgreSQL database is empty. Seeding default data...');
         const defaultStudioSettings: StudioSettings = {
-          name: "Aura Bridal Studio",
+          name: "The Will Studio",
           phone: "0901 234 567",
-          email: "contact@aurabridal.com",
+          email: "contact@thewillstudio.com",
           address: "123 Đường Ba Tháng Hai, Quận 10, TP. Hồ Chí Minh",
-          website: "https://aurabridal.vn",
+          website: "https://thewillstudio.vn",
           opening_hours: "08:30 - 21:30",
-          notes: "Studio váy cưới cao cấp & dịch vụ chụp ảnh trọn gói chuyên nghiệp.",
+          notes: "Studio ảnh cưới cao cấp & dịch vụ chụp ảnh trọn gói chuyên nghiệp.",
           backup_schedule: "weekly",
           last_backup_time: ""
         };

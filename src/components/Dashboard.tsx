@@ -497,7 +497,7 @@ export default function Dashboard({ userRole, userId, onNavigate, studioSettings
         <div>
           <div className="flex items-center space-x-2.5 flex-wrap gap-y-2">
             <h2 className="text-2xl font-semibold tracking-widest text-gold-950 md:text-3xl font-display italic">
-              {studioSettings?.name || 'Aura Bridal Studio'}
+              {studioSettings?.name || 'The Will Studio'}
             </h2>
             {userRole === 'admin' && (
               <span className="bg-gold-500 text-white text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border border-gold-600/20 shadow-3xs flex items-center shrink-0">
@@ -1399,7 +1399,7 @@ export default function Dashboard({ userRole, userId, onNavigate, studioSettings
               )}
             </div>
             <div className="border-t border-gold-100 pt-4 flex justify-between items-center text-[10px] text-gray-400">
-              <span>Hệ thống {studioSettings?.name || 'Aura Bridal'} v1.0.0</span>
+              <span>Hệ thống {studioSettings?.name || 'The Will Studio'} v1.0.0</span>
               <span className="text-emerald-600 font-semibold flex items-center">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5 animate-pulse"></span>
                 Kết nối Máy chủ Sẵn sàng

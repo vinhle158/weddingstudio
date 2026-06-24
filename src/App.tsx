@@ -226,7 +226,7 @@ export default function App() {
       <div className="min-h-screen bg-[#faf9f6] flex items-center justify-center">
         <div className="flex flex-col items-center">
           <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-gold-500"></div>
-          <p className="mt-4 text-slate-500 text-xs font-semibold uppercase tracking-widest">Aura Bridal Studio...</p>
+          <p className="mt-4 text-slate-500 text-xs font-semibold uppercase tracking-widest">The Will Studio...</p>
         </div>
       </div>
     );
@@ -243,8 +243,8 @@ export default function App() {
             <div className="absolute top-4 right-4 bg-gold-200/30 text-gold-800 border border-gold-300/40 px-2.5 py-0.5 rounded-full text-[9px] font-bold flex items-center tracking-wider">
               <Sparkles className="w-2.5 h-2.5 mr-1 text-gold-600 animate-pulse" /> CLOUD LOCAL
             </div>
-            <h1 className="text-3xl font-semibold tracking-widest font-display text-gold-900 italic">AURA BRIDAL</h1>
-            <p className="text-gold-700/80 mt-1.5 text-[10px] uppercase tracking-widest font-medium">Hệ thống quản lý Studio cao cấp</p>
+            <h1 className="text-2xl font-semibold tracking-widest font-display text-gold-900 italic">THE WILL STUDIO</h1>
+            <p className="text-gold-700/80 mt-1.5 text-[10px] uppercase tracking-widest font-medium">Hệ thống quản lý The Will Studio</p>
           </div>
 
           <div className="p-6 space-y-5">
@@ -356,7 +356,7 @@ export default function App() {
       {/* Mobile Header */}
       <header className="md:hidden bg-white text-slate-800 px-4 py-3 flex justify-between items-center z-20 shadow-xs border-b border-slate-200/60">
         <h1 className="text-base font-semibold tracking-widest font-display text-gold-900 italic uppercase truncate max-w-[200px]">
-          {studioSettings?.name || 'AURA BRIDAL'}
+          {studioSettings?.name || 'THE WILL STUDIO'}
         </h1>
         <button 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -374,7 +374,7 @@ export default function App() {
           {/* Logo */}
           <div className="hidden md:block pb-3 border-b border-slate-100">
             <h1 className="text-lg font-semibold tracking-widest font-display text-gold-900 italic uppercase leading-tight line-clamp-2">
-              {studioSettings?.name || 'AURA BRIDAL'}
+              {studioSettings?.name || 'THE WILL STUDIO'}
             </h1>
             <p className="text-[8px] text-slate-400 uppercase tracking-widest mt-1 font-medium truncate" title={studioSettings?.notes || 'Luxury Wedding Studio'}>
               {studioSettings?.notes || 'Luxury Wedding Studio'}
