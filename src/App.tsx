@@ -89,25 +89,79 @@ export default function App() {
   }, []);
 
   const [unreadCount, setUnreadCount] = useState(0);
+  const [toasts, setToasts] = useState<{ id: string; title: string; content: string; type: 'notification' | 'chat' }[]>([]);
 
-  // Poll for unread notification count
+  const knownNotificationIds = React.useRef<Set<string>>(new Set());
+  const knownMessageIds = React.useRef<Set<string>>(new Set());
+  const isFirstLoad = React.useRef<boolean>(true);
+
+  const showToast = (title: string, content: string, type: 'notification' | 'chat') => {
+    const id = Math.random().toString(36).substring(2, 9);
+    setToasts(prev => [...prev, { id, title, content, type }]);
+    setTimeout(() => {
+      setToasts(prev => prev.filter(t => t.id !== id));
+    }, 6000);
+  };
+
+  // Poll for unread notification count and new messages
   useEffect(() => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated || !user) return;
 
-    const fetchUnreadCount = async () => {
+    const fetchNotificationsAndChat = async () => {
       try {
+        // 1. Fetch notifications
         const notifs = await apiRequest('/api/notifications');
-        const count = notifs.filter((n: any) => !n.is_read).length;
-        setUnreadCount(count);
+        const unreadNotifs = notifs.filter((n: any) => !n.is_read);
+        setUnreadCount(unreadNotifs.length);
+
+        // 2. Fetch general chat messages
+        const messages = await apiRequest('/api/chat/messages');
+
+        if (isFirstLoad.current) {
+          // First load: Populate known IDs without showing toasts
+          notifs.forEach((n: any) => knownNotificationIds.current.add(n.id));
+          messages.forEach((m: any) => knownMessageIds.current.add(m.id));
+          isFirstLoad.current = false;
+
+          // Alert on starting session if there are unread notifications
+          if (unreadNotifs.length > 0) {
+            showToast(
+              "Chào mừng quay lại!",
+              `Bạn có ${unreadNotifs.length} thông báo chưa đọc. Hãy kiểm tra tab Thông báo!`,
+              "notification"
+            );
+          }
+        } else {
+          // Subsequent polls: Check for new items
+          notifs.forEach((n: any) => {
+            if (!knownNotificationIds.current.has(n.id)) {
+              knownNotificationIds.current.add(n.id);
+              // Show toast if not on the notifications tab
+              if (activeTab !== 'notifications') {
+                showToast(`Thông báo: ${n.title}`, n.content, "notification");
+              }
+            }
+          });
+
+          messages.forEach((m: any) => {
+            if (!knownMessageIds.current.has(m.id)) {
+              knownMessageIds.current.add(m.id);
+              // Show toast if not sent by current user AND not on the chat tab
+              if (m.sender_id !== user.id && activeTab !== 'chat') {
+                showToast(`Tin nhắn từ ${m.sender_name}`, m.content, "chat");
+              }
+            }
+          });
+        }
       } catch (err) {
-        console.error('Failed to fetch unread count:', err);
+        console.error('Failed to poll notifications/chat:', err);
       }
     };
 
-    fetchUnreadCount();
-    const interval = setInterval(fetchUnreadCount, 10000);
+    fetchNotificationsAndChat();
+    const interval = setInterval(fetchNotificationsAndChat, 10000);
     return () => clearInterval(interval);
-  }, [isAuthenticated, activeTab]);
+  }, [isAuthenticated, user, activeTab]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -139,6 +193,11 @@ export default function App() {
     setIsAuthenticated(false);
     setActiveTab('dashboard');
     setNavigationArg(null);
+    // Reset toast and refs state
+    setToasts([]);
+    knownNotificationIds.current.clear();
+    knownMessageIds.current.clear();
+    isFirstLoad.current = true;
   };
 
   const handleQuickLogin = (quickEmail: string, quickPass: string) => {
@@ -443,6 +502,41 @@ export default function App() {
           <Settings onSettingsSaved={fetchStudioSettings} />
         )}
       </main>
+
+      {/* Floating Toast Notification Balloons */}
+      <div className="fixed top-4 right-4 z-[9999] max-w-sm w-full space-y-3 pointer-events-none">
+        {toasts.map(toast => (
+          <div
+            key={toast.id}
+            className="pointer-events-auto bg-white rounded-xl border border-gold-200/40 p-4 shadow-lg flex items-start gap-3 relative overflow-hidden transition-all duration-300 transform translate-y-0 opacity-100 animate-slide-in"
+          >
+            {/* Highlight bar */}
+            <div className={`absolute top-0 left-0 bottom-0 w-1.5 ${toast.type === 'notification' ? 'bg-gold-500' : 'bg-blue-500'}`}></div>
+            
+            <div className="flex-1 space-y-1 pl-1.5">
+              <h4 className="text-xs font-bold text-slate-800 flex items-center justify-between">
+                <span className="flex items-center gap-1">
+                  {toast.type === 'notification' ? (
+                    <Bell className="w-3.5 h-3.5 text-gold-600 animate-bounce" />
+                  ) : (
+                    <MessageSquare className="w-3.5 h-3.5 text-blue-500" />
+                  )}
+                  {toast.title}
+                </span>
+                <button 
+                  onClick={() => setToasts(prev => prev.filter(t => t.id !== toast.id))}
+                  className="text-slate-400 hover:text-slate-600 transition-colors ml-2 text-sm font-bold focus:outline-hidden"
+                >
+                  ×
+                </button>
+              </h4>
+              <p className="text-[11px] text-slate-500 leading-relaxed truncate max-w-[280px]" title={toast.content}>
+                {toast.content}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
 
     </div>
   );
